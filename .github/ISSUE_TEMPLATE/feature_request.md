@@ -7,8 +7,11 @@ assignees: nfuller52
 
 ---
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+In order to 
+I want 
+
+**Acceptance Criteria**
+- 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
