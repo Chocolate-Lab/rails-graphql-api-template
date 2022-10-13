@@ -9,7 +9,6 @@ gem 'bootsnap', require: false
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4'
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem 'bullet'
@@ -33,3 +32,5 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 end
+
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
