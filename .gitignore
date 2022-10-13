@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+coverage/
 
 # Ignore uploaded files in development.
 /storage/*
@@ -20,5 +21,7 @@
 # Ignore database.yml
 /config/database.yml
 
-# Ignore simple cov directories
-coverage/
+# Ignore secure env variables
+.env
+.env.local
+.env.*.local
