@@ -27,10 +27,18 @@ module RailsGraphqlApiTemplate
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.generators do |generator|
-      generator.factory_bot suffix: 'factory'
-      generator.test_framework :rspec
-      generator.fixture_replacement :factory_bot, dir: 'spec/factories'
+    config.generators do |g|
+      g.assets false
+      g.factory_bot suffix: 'factory'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+      g.helper false
+      g.jbuilder false
+      g.request_specs false
+      g.routing_specs false
+      g.stylesheets false
+      g.system_tests false
+      g.test_framework :rspec
+      g.view_specs false
     end
   end
 end
