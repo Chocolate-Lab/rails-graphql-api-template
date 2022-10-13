@@ -26,6 +26,8 @@ module RailsGraphqlApiTemplate
 
     config.generators do |generator|
       generator.factory_bot suffix: "factory"
+      generator.test_framework :rspec
+      generator.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
   end
 end
