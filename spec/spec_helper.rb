@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 require 'simplecov-console'
 
@@ -7,11 +9,11 @@ end
 
 SimpleCov.minimum_coverage 100
 
-SimpleCov.formatter = if ENV["CI"] == "true"
-  SimpleCov::Formatter::Console
-else
-  SimpleCov::Formatter::HTMLFormatter
-end
+SimpleCov.formatter = if ENV['CI'] == 'true'
+                        SimpleCov::Formatter::Console
+                      else
+                        SimpleCov::Formatter::HTMLFormatter
+                      end
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -28,7 +30,5 @@ RSpec.configure do |config|
   config.order = :random
   config.profile_examples = 3
 
-  if config.files_to_run.one?
-    config.default_formatter = "doc"
-  end
+  config.default_formatter = 'doc' if config.files_to_run.one?
 end

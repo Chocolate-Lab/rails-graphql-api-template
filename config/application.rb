@@ -1,12 +1,15 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module RailsGraphqlApiTemplate
+  # Application configurations
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -25,7 +28,7 @@ module RailsGraphqlApiTemplate
     config.api_only = true
 
     config.generators do |generator|
-      generator.factory_bot suffix: "factory"
+      generator.factory_bot suffix: 'factory'
       generator.test_framework :rspec
       generator.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
