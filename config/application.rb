@@ -1,12 +1,15 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module RailsGraphqlApiTemplate
+  # Application configurations
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -23,5 +26,19 @@ module RailsGraphqlApiTemplate
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.generators do |g|
+      g.assets false
+      g.factory_bot suffix: 'factory'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+      g.helper false
+      g.jbuilder false
+      g.request_specs false
+      g.routing_specs false
+      g.stylesheets false
+      g.system_tests false
+      g.test_framework :rspec
+      g.view_specs false
+    end
   end
 end
