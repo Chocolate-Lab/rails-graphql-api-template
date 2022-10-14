@@ -8,17 +8,22 @@ namespace :rails_graphql_api do
     if args.app_name.blank?
       puts 'Rake aborted!'
       puts 'Provide an application name to the rake task'
-      puts '=> rake "rails_graphql_api:setup[new_app_name]"'
+      puts '-> rails rails_graphql_api:setup[new_app_name]'
       next
     end
 
     def change_in_file(file_path, old_content, new_content)
       return unless File.exist?(file_path)
 
+      puts "updating #{file_path.basename.to_s}"
+
       app_file_contents = File.read(file_path)
       new_app_file_contents = app_file_contents.gsub(old_content, new_content)
 
       File.open(file_path, 'w') { |file| file.puts(new_app_file_contents) }
+
+      puts "  -> changed #{old_content} to #{new_content}"
+      puts ''
     end
 
     ## Assign the app name in two formats
