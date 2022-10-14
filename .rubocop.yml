@@ -13,6 +13,9 @@ AllCops:
     - "node_modules/**/*"
     - "vendor/**/*"
 
+Style/Documentation:
+  Enabled: false
+
 Layout/LineLength:
   Max: 90
   AllowedPatterns: ["^ *# "]

@@ -24,6 +24,7 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'ruby-lsp'
 end
 
 group :test do
