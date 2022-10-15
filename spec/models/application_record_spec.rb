@@ -2,14 +2,9 @@
 
 require 'rails_helper'
 
-class TestModel < ApplicationRecord
-  def self.load_schema!
-    @columns_hash = {}
-  end
-end
-
 RSpec.describe ApplicationRecord do
-  subject(:test_model) { TestModel.new }
+  # defined in spec/support/active_record_test_model.rb
+  subject(:test_model) { ActiveRecordTestModel.new }
 
-  it { is_expected.to be_instance_of(TestModel) }
+  it { is_expected.to be_instance_of(ActiveRecordTestModel) }
 end
