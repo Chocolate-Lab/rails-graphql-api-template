@@ -101,6 +101,11 @@ namespace :rails_graphql_api do
         "#{app_name_classified}Schema"
       ),
       build_file_hash(
+        'spec/requets/graphql_spec.rb',
+        'RailsGraphqlApiTemplateSchema',
+        "#{app_name_classified}Schema"
+      ),
+      build_file_hash(
         'app/controllers/graphql_controller.rb',
         'RailsGraphqlApiTemplateSchema',
         "#{app_name_classified}Schema"
