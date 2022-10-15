@@ -2,6 +2,7 @@
 
 return unless Rails.env.development?
 
+# rubocop:disable Metrics/BlockLength
 namespace :rails_graphql_api do
   desc 'Bootstrap a fresh copy of the app'
   task :setup, [:app_name] => :environment do |_task, args|
@@ -12,10 +13,28 @@ namespace :rails_graphql_api do
       next
     end
 
-    def change_in_file(file_path, old_content, new_content)
+    def build_file_hash(path, old_content, new_content)
+      { path:, old_content:, new_content: }
+    end
+
+    def full_file_path(file_path)
+      Rails.root.join(file_path)
+    end
+
+    def rename_file(file_path, new_file_path)
+      file_path = full_file_path(file_path)
+
       return unless File.exist?(file_path)
 
-      puts "updating #{file_path.basename.to_s}"
+      File.rename(file_path, new_file_path)
+    end
+
+    def change_in_file(file_path, old_content, new_content)
+      file_path = full_file_path(file_path)
+
+      return unless File.exist?(file_path)
+
+      puts "updating #{file_path.basename}"
 
       app_file_contents = File.read(file_path)
       new_app_file_contents = app_file_contents.gsub(old_content, new_content)
@@ -31,19 +50,57 @@ namespace :rails_graphql_api do
     app_name_underscored = args.app_name.parameterize(separator: '_').underscore
     app_name_classified  = app_name_underscored.classify
 
-    ## Files
+    ## Rename files
     ###########################################
-    app_config   = Rails.root.join('config/application.rb')
-    db_config    = Rails.root.join('config/database.yml')
-    cable_config = Rails.root.join('config/cable.yml')
-    prod_config  = Rails.root.join('config/environments/production.rb')
+    rename_file(
+      'app/graphql/rails_graphql_api_template_schema.rb',
+      "app/graphql/#{app_name_underscored}_schema.rb"
+    )
+
+    ## File changes
+    ###########################################
+    file_changes = [
+      build_file_hash(
+        'config/application.rb',
+        'RailsGraphqlApiTemplate',
+        app_name_classified
+      ),
+      build_file_hash(
+        'config/database.yml',
+        'RAILS_GRAPHQL_API_TEMPLATE',
+        app_name_underscored.upcase
+      ),
+      build_file_hash(
+        'config/database.yml',
+        'rails_graphql_api_template',
+        app_name_underscored
+      ),
+      build_file_hash(
+        'config/cable.yml',
+        'rails_graphql_api_template',
+        app_name_underscored
+      ),
+      build_file_hash(
+        'config/environments/production.rb',
+        'rails_graphql_api_template',
+        app_name_underscored
+      ),
+      build_file_hash(
+        "app/graphql/#{app_name_underscored}_schema.rb",
+        'RailsGraphqlApiTemplateSchema',
+        "#{app_name_classified}Schema"
+      )
+    ]
 
     ## Update contents of the files
     ###########################################
-    change_in_file(app_config, 'RailsGraphqlApiTemplate', app_name_classified)
-    change_in_file(db_config, 'RAILS_GRAPHQL_API_TEMPLATE', app_name_underscored.upcase)
-    change_in_file(db_config, 'rails_graphql_api_template', app_name_underscored)
-    change_in_file(cable_config, 'rails_graphql_api_template', app_name_underscored)
-    change_in_file(prod_config, 'rails_graphql_api_template', app_name_underscored)
+    file_changes.each do |file_change|
+      change_in_file(
+        file_change[:path],
+        file_change[:old_content],
+        file_change[:new_content]
+      )
+    end
   end
 end
+# rubocop:enable Metrics/BlockLength
