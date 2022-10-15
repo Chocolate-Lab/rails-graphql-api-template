@@ -57,6 +57,11 @@ namespace :rails_graphql_api do
       "app/graphql/#{app_name_underscored}_schema.rb"
     )
 
+    rename_file(
+      'app/graphql/rails_graphql_api_template_schema_spec.rb',
+      "app/graphql/#{app_name_underscored}_schema_spec.rb"
+    )
+
     ## File changes
     ###########################################
     file_changes = [
@@ -87,6 +92,16 @@ namespace :rails_graphql_api do
       ),
       build_file_hash(
         "app/graphql/#{app_name_underscored}_schema.rb",
+        'RailsGraphqlApiTemplateSchema',
+        "#{app_name_classified}Schema"
+      )
+      build_file_hash(
+        "spec/graphql/#{app_name_underscored}_schema.rb",
+        'RailsGraphqlApiTemplateSchema',
+        "#{app_name_classified}Schema"
+      )
+      build_file_hash(
+        'app/controllers/graphql_controller.rb',
         'RailsGraphqlApiTemplateSchema',
         "#{app_name_classified}Schema"
       )
