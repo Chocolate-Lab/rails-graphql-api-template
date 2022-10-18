@@ -1,4 +1,4 @@
-name: Code Analysis
+name: Code Quality
 
 on:
   pull_request:
@@ -9,8 +9,7 @@ on:
       - 'main'
 
 jobs:
-  brakeman:
-    name: Brakeman scan
+  analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,6 +24,18 @@ jobs:
         run: |
           gem install brakeman
 
-      - name: Scan
+      - name: Install latest version of bundle-audit
+        run: |
+          gem install bundle-audit
+
+      - name: Brakeman scan
         run: |
           brakeman --quiet --skip-libs --exit-on-warn --no-pager
+
+      - name: Bundle audit
+        run: |
+          bundle-audit check --update
+
+      - name: Rubocop verification
+        run: |
+          rubocop --config .rubocop.yml
