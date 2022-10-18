@@ -7,15 +7,11 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
 
   def execute
-    variables = prepare_variables(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {}
     result = RailsGraphqlApiTemplateSchema.execute(
-      query,
-      variables:,
-      context:,
-      operation_name:
+      params[:query],
+      variables: prepare_variables(params[:variables]),
+      context: {},
+      operation_name: params[:operationName]
     )
     render json: result
   rescue StandardError => e
@@ -26,22 +22,13 @@ class GraphqlController < ApplicationController
 
   private
 
-  # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
+    return {} if variables_param.blank?
+
     case variables_param
-    when String
-      if variables_param.present?
-        JSON.parse(variables_param) || {}
-      else
-        {}
-      end
-    when ActionController::Parameters
-      # GraphQL-Ruby will validate name and type of incoming variables.
-      variables_param.to_unsafe_hash
-    when nil
-      {}
-    else
-      raise ArgumentError, "Unexpected parameter: #{variables_param}"
+    when String then variables_param.present? ? JSON.parse(variables_param) || {} : {}
+    when Hash, ActionController::Parameters then variables_param.to_unsafe_hash
+    else raise ArgumentError, "Unexpected parameter: #{variables_param}"
     end
   end
 
