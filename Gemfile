@@ -13,6 +13,7 @@ gem 'puma', '~> 5.0'
 gem 'rack-attack'
 gem 'rack-cors'
 gem 'rails', '~> 7.0.4'
+gem 'strong_migrations'
 
 group :development, :test do
   gem 'bullet'
