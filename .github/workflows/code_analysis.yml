@@ -1,0 +1,30 @@
+name: Code Analysis
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  brakeman:
+    name: Brakeman scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install latest version of brakeman
+        run: |
+          gem install brakeman
+
+      - name: Scan
+        run: |
+          brakeman --quiet --skip-libs --exit-on-warn --no-pager
