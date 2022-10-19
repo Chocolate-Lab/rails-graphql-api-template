@@ -10,6 +10,7 @@ on:
 
 jobs:
   security_analysis:
+    name: Brakeman & Bundle Audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -37,6 +38,7 @@ jobs:
           bundle-audit check --update
 
   linting:
+    name: Rubocop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

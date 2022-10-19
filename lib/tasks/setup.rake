@@ -76,7 +76,7 @@ namespace :rails_graphql_api do
         app_name_underscored.upcase
       ),
       build_file_hash(
-        'config/database.yml',
+        '.devcontainer/docker-componse.yml',
         'rails_graphql_api_template',
         app_name_underscored
       ),
