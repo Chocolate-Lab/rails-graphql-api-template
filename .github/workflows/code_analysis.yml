@@ -1,0 +1,54 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  security_analysis:
+    name: Brakeman & Bundle Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Install latest version of brakeman
+        run: |
+          gem install brakeman
+
+      - name: Install latest version of bundle-audit
+        run: |
+          gem install bundle-audit
+
+      - name: Brakeman scan
+        run: |
+          brakeman --quiet --skip-libs --exit-on-warn --no-pager
+
+      - name: Bundle audit
+        run: |
+          bundle-audit check --update
+
+  linting:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Rubocop verification
+        run: |
+          bundle exec rubocop --config .rubocop.yml
