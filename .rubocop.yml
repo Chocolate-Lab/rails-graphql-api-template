@@ -9,6 +9,7 @@ AllCops:
     - "bin/**/*"
     - "db/migrate/*.rb"
     - "lib/tasks/auto_annotate_models.rake"
+    - "config/initializers/strong_migrations.rb"
     - "db/schema.rb"
     - "node_modules/**/*"
     - "vendor/**/*"

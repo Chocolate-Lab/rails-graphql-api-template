@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Mark existing migrations as safe
-StrongMigrations.start_after = 20_221_018_144_210
+StrongMigrations.start_after = 20221018144210
 
 # Set timeouts for migrations
 # If you use PgBouncer in transaction mode, delete these lines and set timeouts on the database user
