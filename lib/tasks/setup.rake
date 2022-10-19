@@ -25,11 +25,11 @@ namespace :rails_graphql_api do
       File.exist?(full_file_path(short_path))
     end
 
-    def copy_file(file_path, new_file_path)
+    def clone_file(file_path, new_file_path)
       return unless file_exists?(file_path)
       return if file_exists?(new_file_path)
 
-      File.copy(
+      FileUtils.cp(
         full_file_path(file_path),
         full_file_path(new_file_path)
       )
@@ -67,7 +67,7 @@ namespace :rails_graphql_api do
 
     ## Copy files
     ###########################################
-    copy_file('.env.sample', '.env.local')
+    clone_file('.env.sample', '.env.local') # rails provides a `copy_file` method
 
     ## Rename / Move files
     ###########################################
