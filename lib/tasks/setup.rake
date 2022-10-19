@@ -21,12 +21,27 @@ namespace :rails_graphql_api do
       Rails.root.join(file_path)
     end
 
+    def file_exists?(short_path)
+      File.exist?(full_file_path(file_path))
+    end
+
+    def copy_file(file_path, new_file_path)
+      return unless file_exists?(file_path)
+      return if file_exists?(new_file_path)
+
+      File.copy(
+        full_file_path(file_path),
+        full_file_path(new_file_path)
+      )
+    end
+
     def rename_file(file_path, new_file_path)
-      file_path = full_file_path(file_path)
+      return unless file_exists?(file_path)
 
-      return unless File.exist?(file_path)
-
-      File.rename(file_path, new_file_path)
+      File.rename(
+        full_file_path(file_path),
+        full_file_path(new_file_path)
+      )
     end
 
     def change_in_file(file_path, old_content, new_content)
@@ -50,7 +65,11 @@ namespace :rails_graphql_api do
     app_name_underscored = args.app_name.parameterize(separator: '_').underscore
     app_name_classified  = app_name_underscored.classify
 
-    ## Rename files
+    ## Copy files
+    ###########################################
+    copy_file('.env.sample', '.env.local')
+
+    ## Rename / Move files
     ###########################################
     rename_file(
       'app/graphql/rails_graphql_api_template_schema.rb',
