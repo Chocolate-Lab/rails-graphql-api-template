@@ -27,8 +27,6 @@ services:
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/rails_graphql_api_template_development
 
   db:
     image: postgres:15-alpine
@@ -38,7 +36,7 @@ services:
       - ./create-db-user.sql:/docker-entrypoint-initdb.d/create-db-user.sql
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: rails_graphql_api_template_development
+      POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
