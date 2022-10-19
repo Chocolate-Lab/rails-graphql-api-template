@@ -22,7 +22,7 @@ namespace :rails_graphql_api do
     end
 
     def file_exists?(short_path)
-      File.exist?(full_file_path(file_path))
+      File.exist?(full_file_path(short_path))
     end
 
     def copy_file(file_path, new_file_path)
