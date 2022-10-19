@@ -9,7 +9,7 @@ on:
       - 'main'
 
 jobs:
-  analysis:
+  security_analysis:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
         run: |
           bundle-audit check --update
 
-  rubocop:
+  linting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,4 +49,4 @@ jobs:
 
       - name: Rubocop verification
         run: |
-          rubocop --config .rubocop.yml
+          bundle exec rubocop --config .rubocop.yml
