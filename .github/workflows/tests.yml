@@ -13,13 +13,17 @@ jobs:
     name: RSpec
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/app_test
+      RAILS_ENV: test
+
     services:
       postgres:
         image: postgres:15-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: app_test
+          POSTGRES_DB: postgres
         ports:
           - 5432:5432
         options: >-
@@ -28,6 +32,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,6 +42,10 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Create test DB
+        run: |
+          bin/rails db:prepare
+
       - name: Rspec
         run: |
-          DATABASE_URL=postgres://postgres:postgres@localhost:5432/app_template_development bundle exec rspec
+          bundle exec rspec
